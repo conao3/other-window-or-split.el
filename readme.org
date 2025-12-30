@@ -1,15 +1,75 @@
-* What's this?
-This package provide =other-window-or-split= and =window-split-dwim= .
+#+TITLE: other-window-or-split
+#+AUTHOR: Conao
+#+OPTIONS: toc:nil num:nil
+
+* Overview
+
+*other-window-or-split* is an Emacs package that provides intelligent window management. It automatically splits the frame when switching windows if only one window exists, making navigation seamless and efficient.
 
 [[./image/split.gif]]
-* install
-#+BEGIN_SRC elisp
-  (use-package other-window-or-split
-    :init (el-get-bundle conao/other-window-or-split)
-    :bind* (("C-t"   . other-window-or-split)
-            ("C-S-t" . previous-other-window-or-split)
-            ("M-t"   . split-window-dwim)
-            ("C-c j" . adjust-windows-size)))
-#+END_SRC
 
-Depending =use-package= and =el-get= for this sumple code.
+* Features
+
+- *other-window-or-split* - Switch to another window, automatically splitting if needed
+- *previous-other-window-or-split* - Same as above, but in reverse direction
+- *split-window-dwim* - Intelligently split based on frame dimensions (horizontal for wide frames, vertical for tall frames)
+- *adjust-windows-size* - Balance all window sizes
+- *window-resizer* - Interactive window resizing with keyboard controls
+
+* Installation
+
+** Using use-package with el-get
+
+#+begin_src emacs-lisp
+(use-package other-window-or-split
+  :init (el-get-bundle conao/other-window-or-split)
+  :bind* (("C-t"   . ws-other-window-or-split)
+          ("C-S-t" . ws-previous-other-window-or-split)
+          ("M-t"   . ws-split-window-dwim)
+          ("C-c j" . ws-adjust-windows-size)))
+#+end_src
+
+** Using straight.el
+
+#+begin_src emacs-lisp
+(use-package other-window-or-split
+  :straight (other-window-or-split :type git :host github :repo "conao3/other-window-or-split.el")
+  :bind* (("C-t"   . ws-other-window-or-split)
+          ("C-S-t" . ws-previous-other-window-or-split)
+          ("M-t"   . ws-split-window-dwim)
+          ("C-c j" . ws-adjust-windows-size)))
+#+end_src
+
+** Manual Installation
+
+Clone this repository and add it to your load-path:
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path "/path/to/other-window-or-split.el")
+(require 'other-window-or-split)
+#+end_src
+
+* Configuration
+
+** Custom Variables
+
+| Variable                           | Default | Description                                      |
+|------------------------------------+---------+--------------------------------------------------|
+| ~ws-split-window-width-with-em~    |      90 | Minimum width threshold for horizontal splitting |
+| ~ws-split-window-hight-with-em~    |      50 | Minimum height threshold for vertical splitting  |
+
+** Window Resizer Keybindings
+
+When using ~ws-window-resizer~, the following keys are available:
+
+| Key   | Action                    |
+|-------+---------------------------|
+| h / f | Shrink horizontally       |
+| l / b | Enlarge horizontally      |
+| k / n | Shrink vertically         |
+| j / p | Enlarge vertically        |
+| Other | Execute bound command and exit |
+
+* License
+
+This project is licensed under the GNU General Public License v3.0. See the source file for details.
